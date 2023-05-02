@@ -13,6 +13,7 @@ import About from './component/About/About.jsx';
 import Blog from './component/Blog/Blog.jsx';
 import SignUp from './component/SignUp/SignUp.jsx';
 import Login from './component/Login/Login.jsx';
+import ChefDetail from './component/ChefDetail/ChefDetail.jsx';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,13 @@ const router = createBrowserRouter([
         path: '/login',
         element : <Login></Login>
       },
+      {
+        path: '/chefDetail/:id',
+        element: <ChefDetail></ChefDetail>,
+        loader : ({params}) => {
+          return fetch(`http://localhost:5000/allChef/${params.id}`)
+        }
+      }
     ]
   },
   {
