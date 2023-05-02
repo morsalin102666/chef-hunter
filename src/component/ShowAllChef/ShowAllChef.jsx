@@ -1,9 +1,10 @@
 import { FaRegThumbsUp } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const ShowAllChef = (props) => {
-    const {id, name, image, experience, recipeNumber, Likes, chefAbout
-    } = props.chef
+const ShowAllChef = ({chef}) => {
+
+    const {id, name, image, experience, recipeNumber, Likes, chefAbout} = chef
+    
     return (
         <div className="container mx-auto mb-10">
             <div className="card card-side bg-base-200 shadow-xl">
