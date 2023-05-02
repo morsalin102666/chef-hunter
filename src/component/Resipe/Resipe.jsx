@@ -1,11 +1,18 @@
 import { useState } from "react";
 import { FaRegThumbsUp } from "react-icons/fa";
+import { toast } from 'react-toastify';
 
 
 const Resipe = (props) => {
 
     const [desible, setDesible] = useState(false)
     const { recipeName, recipeImg, discriptin, Like } = props.resipe
+
+    const hendelClick = () => {
+        setDesible(true);
+        toast('success you favirout')
+    }
+
 
     return (
         <div>
@@ -16,7 +23,7 @@ const Resipe = (props) => {
                     <p>{discriptin}</p>
                     <div className="card-actions flex mt-3">
                         <p className="btn btn-primary"><FaRegThumbsUp className="inline mr-2"></FaRegThumbsUp>{Like}</p>
-                        <button onClick={() => setDesible(!desible)} className={desible ? "btn btn-disabled" : 'btn btn-primary'}>Buy Now</button>
+                        <button onClick={hendelClick} className={desible ? "btn btn-disabled" : 'btn btn-primary'}>Bookmark</button>
                     </div>
                 </div>
             </div>

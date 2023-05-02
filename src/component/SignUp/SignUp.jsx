@@ -1,18 +1,37 @@
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
+
+    const signUpPage = (event) => {
+        event.preventDefault()
+        const from = event.target;
+        const email = from.email.value;
+        const password = from.password.value;
+        const userName = from.userName.value;
+        const photoUrl = from.photoUrl.value;
+        console.log(email, password, photoUrl, userName)
+    }
+
     return (
         <div>
             <div className="hero bg-base-200">
                 <div className="py-20">
                     <div className="card w-[370px] lg:w-[700px] shadow-2xl bg-base-100">
                         <h1 className="text-center pt-8 text-3xl font-bold">Sign Up Form</h1>
-                        <form className="card-body">
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">User name</span>
-                                </label>
-                                <input type="text" required name="userName" placeholder="email" className="input input-bordered" />
+                        <form onSubmit={signUpPage} className="card-body">
+                            <div className="flex justify-between">
+                                <div className="form-control w-[48%]">
+                                    <label className="label">
+                                        <span className="label-text">User name</span>
+                                    </label>
+                                    <input type="text" required name="userName" placeholder="email" className="input input-bordered" />
+                                </div>
+                                <div className="form-control w-[47%]">
+                                    <label className="label">
+                                        <span className="label-text">Photo Url</span>
+                                    </label>
+                                    <input type="url" required name="photoUrl" placeholder="Photo Url" className="input input-bordered" />
+                                </div>
                             </div>
                             <div className="form-control">
                                 <label className="label">
