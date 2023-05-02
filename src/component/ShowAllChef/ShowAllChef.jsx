@@ -1,7 +1,7 @@
 import { FaRegThumbsUp } from "react-icons/fa";
 
 const ShowAllChef = (props) => {
-    const { id, name, image, experience, recipeNumber, Likes, chefAbout
+    const {name, image, experience, recipeNumber, Likes, chefAbout
 } = props.chef
 return (
     <div className="container mx-auto mb-10">
