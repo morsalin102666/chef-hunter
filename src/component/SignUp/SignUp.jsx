@@ -1,15 +1,30 @@
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const SignUp = () => {
+        const [error, setError] = useState('')
+        const {createNewAccount} = useContext(AuthContext)
 
     const signUpPage = (event) => {
         event.preventDefault()
-        const from = event.target;
-        const email = from.email.value;
-        const password = from.password.value;
-        const userName = from.userName.value;
-        const photoUrl = from.photoUrl.value;
-        console.log(email, password, photoUrl, userName)
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        const userName = form.userName.value;
+        const photoUrl = form.photoUrl.value;
+
+        setError('')
+        if (password.length < 6) {
+            setError('plesh mustbe 6 carector password')
+        }
+        createNewAccount(email, password)
+        .then(result => {
+            const user = result.user;
+            console.log(user)
+            form.reset()
+        })
+        .catch(error => {})
     }
 
     return (
@@ -45,6 +60,7 @@ const SignUp = () => {
                                 </label>
                                 <input type="password" required name="password" placeholder="password" className="input input-bordered" />
                             </div>
+                            <p className="mt-5 ml-3">{error}</p>
                             <div className="form-control mt-6">
                                 <button className="btn btn-primary">Sign Up</button>
                             </div>

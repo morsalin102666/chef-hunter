@@ -14,6 +14,7 @@ import Blog from './component/Blog/Blog.jsx';
 import SignUp from './component/SignUp/SignUp.jsx';
 import Login from './component/Login/Login.jsx';
 import ChefDetail from './component/ChefDetail/ChefDetail.jsx';
+import AuthProvider from './component/AuthProvider/AuthProvider.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,28 +23,28 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element : <Home></Home>
+        element: <Home></Home>
       },
       {
         path: '/about',
-        element : <About></About>
+        element: <About></About>
       },
       {
         path: '/blog',
-        element : <Blog></Blog>
+        element: <Blog></Blog>
       },
       {
         path: '/signUp',
-        element : <SignUp></SignUp>
+        element: <SignUp></SignUp>
       },
       {
         path: '/login',
-        element : <Login></Login>
+        element: <Login></Login>
       },
       {
         path: '/chefDetail/:id',
         element: <ChefDetail></ChefDetail>,
-        loader : ({params}) => {
+        loader: ({ params }) => {
           return fetch(`http://localhost:5000/allChef/${params.id}`)
         }
       }
@@ -57,6 +58,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <AuthProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </AuthProvider>
   </React.StrictMode>,
 )
