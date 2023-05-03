@@ -1,6 +1,6 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import app from "../Firebase/FirebaseData";
-import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 
 export const AuthContext = createContext(null)
 const auth = getAuth(app)
@@ -9,7 +9,9 @@ const googleProvider = new GoogleAuthProvider()
 const githubProvider = new GithubAuthProvider()
 
 const AuthProvider = ({children}) => {
+
     const [user, setUser] = useState([])
+    console.log(user)
 
     // ============ sign up with email or password ================
     const createNewAccount = (email, password) => {
@@ -30,6 +32,22 @@ const AuthProvider = ({children}) => {
     const signinGithub = () => {
         return signInWithPopup(auth, githubProvider)
     }
+    
+    // ============ sign out account ================
+    const logOut = () => {
+        return signOut(auth)
+    }
+
+    // ============ User set state ================
+    useEffect(() => {
+        const unSuscribe = onAuthStateChanged(auth, currentUser => {
+            setUser(currentUser)
+        })
+        return () => {
+            return unSuscribe();
+        }
+    }, [])
+
 
     // ============ Auth information pass ================
     const authInfo = {
@@ -37,7 +55,8 @@ const AuthProvider = ({children}) => {
         createNewAccount,
         loginAccount,
         signinGoogle,
-        signinGithub
+        signinGithub,
+        logOut
     }
 
     return (

@@ -1,6 +1,18 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Navebar = () => {
+
+    const { user, logOut } = useContext(AuthContext)
+    console.log(user)
+
+    const logOurAccount = () => {
+        logOut()
+            .then(result => { console.log(result) })
+            .catch(error => console.log(error))
+    }
+
     return (
         <div className="bg-slate-800">
             <div className="navbar bg-slate-800 container mx-auto py-4 text-[20px] text-white">
@@ -31,16 +43,24 @@ const Navebar = () => {
                 <div className="navbar-end">
                     <div>
                         <div className="dropdown dropdown-end">
-                            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                                <div className="w-10 rounded-full">
-                                    <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                                </div>
-                            </label>
-                            <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-52 bg-slate-800 text-[25px]">
-                                <li><p>Name</p></li>
-                                <li><p>Email</p></li>
-                                <li><p>Logout</p></li>
-                            </ul>
+                            {
+                                user && <div><label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                                    <div className="w-10 rounded-full">
+                                        <img src={user ? user.photoURL : ''} />
+                                    </div>
+                                </label>
+                                    <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-[300px] bg-slate-800 text-[25px]">
+                                        {
+                                            user && <li><p className="text-white">{user ? user.displayName : ''}</p></li>
+                                        }
+                                        {
+                                            user && <li><p className="text-white">{user ? user.email : ''}</p></li>
+                                        }
+                                        {
+                                            user && <li onClick={logOurAccount}><p>Logout</p></li>
+                                        }
+
+                                    </ul></div>}
                         </div>
                     </div>
                 </div>
