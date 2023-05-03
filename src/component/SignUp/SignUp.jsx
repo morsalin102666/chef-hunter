@@ -13,6 +13,7 @@ const SignUp = () => {
         const password = form.password.value;
         const userName = form.userName.value;
         const photoUrl = form.photoUrl.value;
+        console.log(userName, photoUrl)
 
         setError('')
         if (password.length < 6) {
@@ -24,7 +25,7 @@ const SignUp = () => {
             console.log(user)
             form.reset()
         })
-        .catch(error => {})
+        .catch(error => {console.log(error.message)})
     }
 
     return (
