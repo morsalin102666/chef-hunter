@@ -5,7 +5,7 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Login = () => {
 
-    const {loginAccount} = useContext(AuthContext)
+    const {loginAccount, signinGoogle} = useContext(AuthContext)
 
     const loginPage = (event) => {
         event.preventDefault()
@@ -20,9 +20,16 @@ const Login = () => {
         })
         .catch(errro => {console.log(errro.message)})
     }
-    
+
     const googleLogin = () => {
-        console.log('amr')
+        signinGoogle()
+        .then(result => {
+            const user = result.user
+            console.log(user)
+        })
+        .catch(error => {
+            console.log(error.message)
+        })
     }
 
 
