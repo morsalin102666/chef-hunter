@@ -5,8 +5,9 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Login = () => {
 
-    const {loginAccount, signinGoogle} = useContext(AuthContext)
+    const { loginAccount, signinGoogle, signinGithub } = useContext(AuthContext)
 
+    // =================== sign in with email and password ==================
     const loginPage = (event) => {
         event.preventDefault()
         const from = event.target;
@@ -14,22 +15,36 @@ const Login = () => {
         const password = from.password.value;
 
         loginAccount(email, password)
-        .then(result => {
-            const user = result.user
-            console.log(user)
-        })
-        .catch(errro => {console.log(errro.message)})
+            .then(result => {
+                const user = result.user
+                console.log(user)
+                from.reset()
+            })
+            .catch(errro => { console.log(errro.message) })
     }
 
+    // =================== sign in with googel ==================
     const googleLogin = () => {
+        signinGithub()
+            .then(result => {
+                const user = result.user
+                console.log(user)
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+    }
+
+    // =================== sign in with github ==================
+    const githubLogin = () => {
         signinGoogle()
-        .then(result => {
-            const user = result.user
-            console.log(user)
-        })
-        .catch(error => {
-            console.log(error.message)
-        })
+            .then(result => {
+                const user = result.user
+                console.log(user)
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
     }
 
 
@@ -61,7 +76,7 @@ const Login = () => {
                             </div>
                             <div className=" mt-5">
                                 <button onClick={googleLogin} className="w-[100%] rounded btn btn-outline hover:bg-primary mb-3"><FaGoogle className="mr-5 text-[25px]"></FaGoogle> Sign in with Google</button>
-                                <button className="w-[100%] rounded btn btn-outline hover:bg-primary"><FaGithub className="mr-5 text-[25px]"></FaGithub> Sign in with Github</button>
+                                <button onClick={githubLogin} className="w-[100%] rounded btn btn-outline hover:bg-primary"><FaGithub className="mr-5 text-[25px]"></FaGithub> Sign in with Github</button>
                             </div>
                             <Link className="mt-5 text-center hover:underline" to={'/signUp'}><p >New user to create a account <span className="font-bold text-blue-900">Sign up</span></p></Link>
                         </form>
