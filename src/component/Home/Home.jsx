@@ -23,7 +23,7 @@ const Home = () => {
     }, [])
 
     if (loading) {
-        return <div className="text-center py-10"><progress className="progress w-56"></progress></div>
+        return <div className="text-center py-[250px]"> <p className="text-[25px] font-bold">Loading.....</p> <progress className="progress w-56"></progress></div>
     }
 
     return (
