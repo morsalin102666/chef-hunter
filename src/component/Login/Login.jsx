@@ -1,24 +1,38 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { useContext } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
 
-    const { loginAccount, signinGoogle, signinGithub } = useContext(AuthContext)
+    const { loginAccount, signinGoogle, signinGithub, loading } = useContext(AuthContext)
+    const location = useLocation()
+    const navigete = useNavigate()
+
+    if (loading) {
+        return <div className="text-center py-[250px]"> <p className="text-[25px] font-bold">Loading.....</p> <progress className="progress w-56"></progress></div>
+    }
+
+    
+
+    let from = location.state?.from?.pathname || "/";
 
     // =================== sign in with email and password ==================
     const loginPage = (event) => {
         event.preventDefault()
-        const from = event.target;
-        const email = from.email.value;
-        const password = from.password.value;
+        const frome = event.target;
+        const email = frome.email.value;
+        const password = frome.password.value;
 
         loginAccount(email, password)
             .then(result => {
                 const user = result.user
                 console.log(user)
-                from.reset()
+                navigete(from, { replace: true })
+                frome.reset()
+                toast('success your login')
             })
             .catch(errro => { console.log(errro.message) })
     }
@@ -29,6 +43,8 @@ const Login = () => {
             .then(result => {
                 const user = result.user
                 console.log(user)
+                navigete(from, { replace: true })
+                toast('success your login')
             })
             .catch(error => {
                 console.log(error.message)
@@ -41,6 +57,8 @@ const Login = () => {
             .then(result => {
                 const user = result.user
                 console.log(user)
+                navigete(from, { replace: true })
+                toast('success your login')
             })
             .catch(error => {
                 console.log(error.message)
@@ -83,6 +101,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer></ToastContainer>
         </div>
     );
 };

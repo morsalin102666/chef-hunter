@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import ShowAllChef from "../ShowAllChef/ShowAllChef";
+import FootBrand from "../FoodBrand/FootBrand";
+import FoodSection from "../FoodSection/FoodSection";
 
 const Home = () => {
+    
     const [chefAll, setChefAll] = useState([])
+    // const [loading, setLoading] = useState(false)
 
-    useEffect( () => {
-        fetch(`http://localhost:5000/allChef`)
-        .then(res => res.json())
-        .then(data => setChefAll(data))
+    // if (loading) {
+    //     return <div className="text-center py-10"><progress className="progress w-56"></progress></div>
+    // }
+    
+
+    useEffect(() => {
+        fetch(`https://chef-recipe-hunting-sarver-morsalin102666.vercel.app/allChef`)
+            .then(res => res.json())
+            .then(data => setChefAll(data))
+            // setLoading(true)
     }, [])
 
     return (
@@ -19,11 +29,13 @@ const Home = () => {
                 <p className="text-center text-[20px] mb-16">Michelin Star Chef, Vikas Khanna, Recognized Among Top 10 Global Chefs</p>
                 {
                     chefAll.map(chef => <ShowAllChef
-                    key={chef.id}
-                    chef={chef}
+                        key={chef.id}
+                        chef={chef}
                     ></ShowAllChef>)
                 }
             </div>
+            <FootBrand></FootBrand>
+            <FoodSection></FoodSection>
         </div>
     );
 };

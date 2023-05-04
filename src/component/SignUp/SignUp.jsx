@@ -1,10 +1,12 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
-        const [error, setError] = useState('')
-        const {createNewAccount} = useContext(AuthContext)
+    const [error, setError] = useState('')
+    const { createNewAccount, updateUserProfile } = useContext(AuthContext)
 
     const signUpPage = (event) => {
         event.preventDefault()
@@ -16,16 +18,35 @@ const SignUp = () => {
         console.log(userName, photoUrl)
 
         setError('')
+
         if (password.length < 6) {
-            setError('plesh mustbe 6 carector password')
+            setError('please mustbe 6 carector password')
         }
+
+        const handleUpdateUserProfile = (name, photoURL) => {
+            const profile = {
+                displayName: name,
+                photoURL: photoURL
+            }
+            updateUserProfile(profile)
+                .then(result => {
+                    console.log(result.user);
+                })
+                .catch(err => {
+                    console.log(err);
+
+                })
+        }
+
         createNewAccount(email, password)
-        .then(result => {
-            const user = result.user;
-            console.log(user)
-            form.reset()
-        })
-        .catch(error => {console.log(error.message)})
+            .then(result => {
+                const user = result.user;
+                console.log(user)
+                handleUpdateUserProfile(userName, photoUrl)
+                form.reset()
+                toast('success your sign up')
+            })
+            .catch(error => { console.log(error.message) })
     }
 
     return (
@@ -70,6 +91,7 @@ const SignUp = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer></ToastContainer>
         </div>
     );
 };

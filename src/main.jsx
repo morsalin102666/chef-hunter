@@ -15,6 +15,7 @@ import SignUp from './component/SignUp/SignUp.jsx';
 import Login from './component/Login/Login.jsx';
 import ChefDetail from './component/ChefDetail/ChefDetail.jsx';
 import AuthProvider from './component/AuthProvider/AuthProvider.jsx';
+import PrivetRoute from './component/PrivetRoute/PrivetRoute.jsx';
 
 const router = createBrowserRouter([
   {
@@ -43,9 +44,9 @@ const router = createBrowserRouter([
       },
       {
         path: '/chefDetail/:id',
-        element: <ChefDetail></ChefDetail>,
+        element: <PrivetRoute><ChefDetail></ChefDetail></PrivetRoute>,
         loader: ({ params }) => {
-          return fetch(`http://localhost:5000/allChef/${params.id}`)
+          return fetch(`https://chef-recipe-hunting-sarver-morsalin102666.vercel.app/allChef/${params.id}`)
         }
       }
     ]

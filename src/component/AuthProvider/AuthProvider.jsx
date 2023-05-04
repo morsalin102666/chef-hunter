@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import app from "../Firebase/FirebaseData";
-import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 
 export const AuthContext = createContext(null)
 const auth = getAuth(app)
@@ -11,25 +11,33 @@ const githubProvider = new GithubAuthProvider()
 const AuthProvider = ({children}) => {
 
     const [user, setUser] = useState([])
-    console.log(user)
+    const [loading, setLoading] = useState(false)
 
     // ============ sign up with email or password ================
     const createNewAccount = (email, password) => {
+        setLoading(true)
         return createUserWithEmailAndPassword(auth, email, password);
+    }
+
+    const updateUserProfile = (profile) => {
+        return updateProfile(auth.currentUser, profile)
     }
     
     // ============ sign in with email or password ================
     const loginAccount = (email, password) => {
+        setLoading(true)
         return signInWithEmailAndPassword(auth, email, password)
     }
     
     // ============ sign in with google ================
     const signinGoogle = () => {
+        setLoading(true)
         return signInWithPopup(auth, googleProvider)
     }
 
     // ============ sign in with google ================
     const signinGithub = () => {
+        setLoading(true)
         return signInWithPopup(auth, githubProvider)
     }
     
@@ -42,6 +50,7 @@ const AuthProvider = ({children}) => {
     useEffect(() => {
         const unSuscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser)
+            setLoading(false)
         })
         return () => {
             return unSuscribe();
@@ -53,10 +62,12 @@ const AuthProvider = ({children}) => {
     const authInfo = {
         user,
         createNewAccount,
+        updateUserProfile,
         loginAccount,
         signinGoogle,
         signinGithub,
-        logOut
+        logOut,
+        loading
     }
 
     return (
