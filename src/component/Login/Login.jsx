@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGithub, FaGoogle } from "react-icons/fa";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Login = () => {
 
     const { loginAccount, signinGoogle, signinGithub, loading } = useContext(AuthContext)
+    const [error, setError] = useState('')
     const location = useLocation()
     const navigete = useNavigate()
 
@@ -15,7 +16,7 @@ const Login = () => {
         return <div className="text-center py-[250px]"> <p className="text-[25px] font-bold">Loading.....</p> <progress className="progress w-56"></progress></div>
     }
 
-    
+
 
     let from = location.state?.from?.pathname || "/";
 
@@ -26,13 +27,19 @@ const Login = () => {
         const email = frome.email.value;
         const password = frome.password.value;
 
+        setError('')
+
+        if (password.length < 6) {
+            setError('please mustbe 6 carector password')
+        }
+
         loginAccount(email, password)
             .then(result => {
                 const user = result.user
                 console.log(user)
                 navigete(from, { replace: true })
-                frome.reset()
                 toast('success your login')
+                frome.reset()
             })
             .catch(errro => { console.log(errro.message) })
     }
@@ -89,6 +96,7 @@ const Login = () => {
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
                             </div>
+                            <p className="mt-5 ml-3">{error}</p>
                             <div className="form-control mt-6">
                                 <button className="btn btn-primary">Login</button>
                             </div>
