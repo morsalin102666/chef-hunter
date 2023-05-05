@@ -41,7 +41,7 @@ const Login = () => {
                 toast('success your login')
                 frome.reset()
             })
-            .catch(errro => { console.log(errro.message) })
+            .catch(errro => { setError(errro.message) })
     }
 
     // =================== sign in with googel ==================
