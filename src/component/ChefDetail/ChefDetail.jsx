@@ -3,8 +3,10 @@ import { useLoaderData } from "react-router-dom";
 import Resipe from "../Resipe/Resipe";
 
 const ChefDetail = () => {
-
+    
     const chef = useLoaderData()
+
+
     const { name, image, experience, recipeNumber, Likes, chefAbout } = chef
 
     return (

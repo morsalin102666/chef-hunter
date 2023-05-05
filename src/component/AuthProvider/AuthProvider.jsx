@@ -15,7 +15,7 @@ const AuthProvider = ({children}) => {
 
     // ============ sign up with email or password ================
     const createNewAccount = (email, password) => {
-        setLoading(true)
+        // setLoading(true)
         return createUserWithEmailAndPassword(auth, email, password);
     }
 
@@ -25,19 +25,19 @@ const AuthProvider = ({children}) => {
     
     // ============ sign in with email or password ================
     const loginAccount = (email, password) => {
-        setLoading(true)
+        // setLoading(true)
         return signInWithEmailAndPassword(auth, email, password)
     }
     
     // ============ sign in with google ================
     const signinGoogle = () => {
-        setLoading(true)
+        // setLoading(true)
         return signInWithPopup(auth, googleProvider)
     }
 
     // ============ sign in with google ================
     const signinGithub = () => {
-        setLoading(true)
+        // setLoading(true)
         return signInWithPopup(auth, githubProvider)
     }
     
